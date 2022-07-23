@@ -42,11 +42,13 @@ const Form = () => {
     } else {
       setValidateName(true);
     }
+
     if (surname.length <= 2 && surname != "") {
       setValidateSurname(false);
     } else {
       setValidateSurname(true);
     }
+
     let myDate = date.split("-");
     const newDate = new Date(myDate[0], myDate[1], myDate[2]);
     const age = Math.round(
@@ -55,7 +57,7 @@ const Form = () => {
     if (age > 17) {
       setValidateDate(true);
     }
-  }, [name, surname, date]);
+  }, [name, surname, date, gender]);
 
   useEffect(() => {
     email &&
