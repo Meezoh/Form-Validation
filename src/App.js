@@ -13,6 +13,3 @@ function App() {
 }
 
 export default App;
-
-// when typing no error message should be shown
-// only after a fetch, if validateEmail is false show error message

@@ -1,16 +1,13 @@
-const Input = ({ typeProp, labelProp, id, value, handler }) => {
+const Input = ({ fieldName, type, placeholder, value, handler }) => {
   return (
     <div className="Input">
-      {/* <label htmlFor={id} className="details">
-        {labelProp}
-      </label>
+      <span className="details">{fieldName}</span>
       <input
-        type={typeProp}
-        id={id}
-        name={id}
+        type={type}
+        placeholder={placeholder}
+        onChange={handler}
         value={value}
-        onChange={(e) => handler(e)}
-      /> */}
+      />
     </div>
   );
 };

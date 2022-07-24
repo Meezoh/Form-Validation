@@ -1,7 +1,6 @@
 import { useState, useEffect } from "react";
 import { Oval } from "react-loader-spinner";
 import Input from "./Input";
-import Radio from "./Radio";
 import Error from "./Error";
 import Fetch from "./Fetch";
 
@@ -72,11 +71,7 @@ const Form = () => {
     }
     !email && setLoading(false);
     setRadioChecked(gender);
-
-    // Alert form submission
-    formData && alert(JSON.stringify(formData));
-    formData && console.log(formData);
-  }, [name, surname, date, email, emailStatus, gender, formData]);
+  }, [name, surname, date, email, emailStatus, gender]);
 
   // Submit form
   const handleSubmit = (e) => {
@@ -112,6 +107,12 @@ const Form = () => {
     }
   };
 
+  // Alert form submission
+  useEffect(() => {
+    formData && alert(JSON.stringify(formData));
+    formData && console.log(formData);
+  }, [formData]);
+
   return (
     <div className="Form">
       <div className="container">
@@ -120,11 +121,11 @@ const Form = () => {
           <form onSubmit={handleSubmit}>
             <div className="user-details">
               <div className="input-box">
-                <span className="details">Name</span>
-                <input
+                <Input
+                  fieldName="Name"
                   type="text"
                   placeholder="Enter your name"
-                  onChange={(e) => handleName(e)}
+                  handler={handleName}
                   value={name}
                 />
                 {!validateName && (
@@ -133,11 +134,11 @@ const Form = () => {
               </div>
 
               <div className="input-box">
-                <span className="details">Surname</span>
-                <input
+                <Input
+                  fieldName="Surname"
                   type="text"
                   placeholder="Enter your surname"
-                  onChange={(e) => handleSurname(e)}
+                  handler={handleSurname}
                   value={surname}
                 />
                 {!validateSurname && (
@@ -145,21 +146,21 @@ const Form = () => {
                 )}
               </div>
               <div className="input-box">
-                <span className="details">Email</span>
-                <input
+                <Input
+                  fieldName="Email"
                   type="text"
                   placeholder="Enter your email"
-                  onChange={(e) => handleEmail(e)}
+                  handler={handleEmail}
                   value={email}
                 />
                 {!validateEmail && <Error msg="Invalid email" />}
-                {loading && <Oval color="#007f00" height={40} width={40} />}
+                {loading && <Oval color="#007f" height={40} width={40} />}
               </div>
               <div className="input-box">
-                <span className="details">Birth date</span>
-                <input
+                <Input
+                  fieldName="Birth date"
                   type="date"
-                  onChange={(e) => handleDate(e)}
+                  handler={handleDate}
                   value={date}
                 />
                 {!validateDate && <Error msg="Must be older than 18 years" />}
@@ -211,10 +212,6 @@ const Form = () => {
             <div className="button">
               <input type="submit" value="Submit" />
             </div>
-
-            {/* <button className="button" type="submit">
-              Submit
-            </button> */}
           </form>
           <Fetch
             email={email}
@@ -223,75 +220,6 @@ const Form = () => {
           />
         </article>
       </div>
-      {/* <div className="container">
-        <h3 className="title">Form Validation</h3>
-        <form className="Form" onSubmit={handleSubmit}>
-          <div className="user-details">
-            <Input
-              labelProp="Name"
-              typeProp="text"
-              id="name"
-              value={name}
-              handler={handleName}
-              className="input-box"
-            />
-            {!validateName && (
-              <Error msg="Name should be greater than 2 characters" />
-            )}
-            <Input
-              labelProp="Surname"
-              typeProp="text"
-              id="surname"
-              value={surname}
-              handler={handleSurname}
-              className="input-box"
-            />
-            {!validateSurname && (
-              <Error msg="Surname should be greater than 2 characters" />
-            )}
-            <Input
-              labelProp="Birth date"
-              typeProp="date"
-              id="date"
-              value={date}
-              handler={handleDate}
-              className="input-box"
-            />
-            {!validateDate && <Error msg="Must be older than 18 years" />}
-            <Input
-              labelProp="Email"
-              typeProp="text"
-              id="email"
-              value={email}
-              handler={handleEmail}
-              className="input-box"
-            />
-            {!validateEmail && <Error msg="Invalid email" />}
-            {loading && <ThreeDots color="#007f00" height={40} width={40} />}
-          </div>
-
-          <div onChange={(e) => handleGender(e)} className="gender-details">
-            <span className="genter-title">Gender</span>
-            <Radio labelProp="Male" typeProp="radio" id="gender" value="Male" />
-            <Radio
-              labelProp="Female"
-              typeProp="radio"
-              id="gender"
-              value="Female"
-            />
-            <Radio
-              labelProp="Prefer not to say"
-              typeProp="radio"
-              id="gender"
-              value="Prefer not to say"
-            />
-          </div>
-
-          <button type="submit" className="button">
-            Submit
-          </button>
-        </form>
-      </div> */}
     </div>
   );
 };
