@@ -2,7 +2,7 @@ import { useState, useEffect } from "react";
 import { Oval } from "react-loader-spinner";
 import Input from "./Input";
 import Error from "./Error";
-import Fetch from "./Fetch";
+import Fetch from "../Hook/Fetch";
 
 const Form = () => {
   const [name, setName] = useState("");
@@ -12,7 +12,6 @@ const Form = () => {
   const [gender, setGender] = useState("");
   const [formData, setFormData] = useState("");
   const [radioChecked, setRadioChecked] = useState("");
-
   const [validateName, setValidateName] = useState(true);
   const [validateSurname, setValidateSurname] = useState(true);
   const [validateDate, setValidateDate] = useState(true);
