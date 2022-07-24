@@ -30,4 +30,4 @@ It correctly bundles React in production mode and optimizes the build for the be
 ## Author
 
 Abdulhameed Hameed
-[Gmail](hameed.babba@gmail.com)
+hameed.babba@gmail.com
