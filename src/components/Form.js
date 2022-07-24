@@ -1,8 +1,9 @@
 import { useState, useEffect } from "react";
+import { Oval } from "react-loader-spinner";
 import Input from "./Input";
 import Radio from "./Radio";
 import Error from "./Error";
-import { TailSpin, Oval, ThreeDots } from "react-loader-spinner";
+import Fetch from "./Fetch";
 
 const Form = () => {
   const [name, setName] = useState("");
@@ -11,14 +12,14 @@ const Form = () => {
   const [email, setEmail] = useState("");
   const [gender, setGender] = useState("");
   const [formData, setFormData] = useState("");
-  const [loading, setLoading] = useState(false);
+  const [radioChecked, setRadioChecked] = useState("");
 
   const [validateName, setValidateName] = useState(true);
   const [validateSurname, setValidateSurname] = useState(true);
   const [validateDate, setValidateDate] = useState(true);
   const [validateEmail, setValidateEmail] = useState(true);
   const [emailStatus, setEmailStatus] = useState(true);
-  // const [radioChecked, setRadioChecked] = useState(false);
+  const [loading, setLoading] = useState(false);
 
   const handleName = (e) => {
     setName(e.target.value);
@@ -70,22 +71,12 @@ const Form = () => {
       setValidateEmail(true);
     }
     !email && setLoading(false);
-  }, [name, surname, date, email, emailStatus, gender]);
+    setRadioChecked(gender);
 
-  // Email
-  useEffect(() => {
-    email &&
-      fetch(
-        "https://peaceful-gorge-48410.herokuapp.com/https://extensi.io/api/email-validator.php?email=" +
-          email
-      )
-        .then((res) => res.json())
-        .then((result) => {
-          setEmailStatus(result.validation_status);
-          setLoading(false);
-        })
-        .catch((err) => console.log(err));
-  }, [email]);
+    // Alert form submission
+    formData && alert(JSON.stringify(formData));
+    formData && console.log(formData);
+  }, [name, surname, date, email, emailStatus, gender, formData]);
 
   // Submit form
   const handleSubmit = (e) => {
@@ -109,7 +100,8 @@ const Form = () => {
       surname != "" &&
       validateEmail &&
       email != "" &&
-      validateDate
+      validateDate &&
+      !loading
     ) {
       setFormData({ name, surname, date, email, gender });
       setName("");
@@ -119,11 +111,6 @@ const Form = () => {
       setGender("");
     }
   };
-
-  useEffect(() => {
-    console.log(formData);
-    formData && alert(JSON.stringify(formData));
-  }, [formData]);
 
   return (
     <div className="Form">
@@ -179,14 +166,30 @@ const Form = () => {
               </div>
             </div>
 
-            <div className="gender-details" onClick={(e) => handleGender(e)}>
-              <input type="radio" name="gender" id="dot-1" value="Male" />
-              <input type="radio" name="gender" id="dot-2" value="Female" />
+            <div className="gender-details">
+              <input
+                type="radio"
+                name="gender"
+                id="dot-1"
+                value="Male"
+                onChange={handleGender}
+                checked={radioChecked == "Male"}
+              />
+              <input
+                type="radio"
+                name="gender"
+                id="dot-2"
+                value="Female"
+                onChange={handleGender}
+                checked={radioChecked == "Female"}
+              />
               <input
                 type="radio"
                 name="gender"
                 id="dot-3"
                 value="Prefer not to say"
+                onChange={handleGender}
+                checked={radioChecked == "Prefer not to say"}
               />
               <span className="gender-title">Gender</span>
               <div className="category">
@@ -208,7 +211,16 @@ const Form = () => {
             <div className="button">
               <input type="submit" value="Submit" />
             </div>
+
+            {/* <button className="button" type="submit">
+              Submit
+            </button> */}
           </form>
+          <Fetch
+            email={email}
+            setEmailStatus={setEmailStatus}
+            setLoading={setLoading}
+          />
         </article>
       </div>
       {/* <div className="container">
