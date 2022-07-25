@@ -9,13 +9,14 @@ const Form = () => {
   const [surname, setSurname] = useState("");
   const [date, setDate] = useState("");
   const [email, setEmail] = useState("");
+  const [timerEmail, setTimerEmail] = useState("");
   const [gender, setGender] = useState("");
   const [formData, setFormData] = useState("");
   const [radioChecked, setRadioChecked] = useState("");
   const [validateName, setValidateName] = useState(true);
   const [validateSurname, setValidateSurname] = useState(true);
   const [validateDate, setValidateDate] = useState(true);
-  const [validateEmail, setValidateEmail] = useState(true);
+  const [validateEmail, setValidateEmail] = useState(null);
   const [emailStatus, setEmailStatus] = useState(true);
   const [loading, setLoading] = useState(false);
 
@@ -31,8 +32,10 @@ const Form = () => {
   };
   const handleEmail = (e) => {
     setEmail(e.target.value);
-    setLoading(true);
   };
+  setTimeout(() => {
+    email && setTimerEmail(email);
+  }, 3000);
   const handleGender = (e) => {
     setGender(e.target.value);
   };
@@ -62,13 +65,15 @@ const Form = () => {
       setValidateDate(true);
     }
 
-    // Gender
+    // Email
     if (!emailStatus && email != "") {
       setValidateEmail(false);
     } else {
       setValidateEmail(true);
     }
     !email && setLoading(false);
+
+    // Gender
     setRadioChecked(gender);
   }, [name, surname, date, email, emailStatus, gender]);
 
@@ -213,6 +218,7 @@ const Form = () => {
             </div>
           </form>
           <Fetch
+            timerEmail={timerEmail}
             email={email}
             setEmailStatus={setEmailStatus}
             setLoading={setLoading}
