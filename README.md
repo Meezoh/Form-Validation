@@ -4,7 +4,7 @@ This project is a web form that has validated fields (name, surname, birth date,
 
 ## Description
 
-- The project is created with npm create-react-app.
+- The project is created with npx create-react-app.
 - It has three required fields (name, surname and email).
 - The email is validated with a real time async call.
 - The name and surname are validated to have at least 3 characters.
